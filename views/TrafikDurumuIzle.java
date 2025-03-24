@@ -1,0 +1,305 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.akillisehirsistemi.views;
+
+import javax.swing.table.DefaultTableModel;
+import com.mycompany.akillisehirsistemi.controllers.TrafficManagement;
+import com.mycompany.akillisehirsistemi.models.vehicle.Vehicle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import com.mycompany.akillisehirsistemi.models.vehicle.ElektrikliOtomobil;
+import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author EMD
+ */
+public class TrafikDurumuIzle extends javax.swing.JFrame {
+    ElektrikliOtomobil elektrikliOtomobil;
+    /**
+     * Creates new form TrafikDurumuIzle
+     */
+    public TrafikDurumuIzle() {
+        initComponents();
+        this.setLayout(null); // Layout'u devre dışı bırak
+
+        // JLabel'in içeriğini ortala
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        // JLabel'in kendisini ortala
+        int frameWidth = this.getWidth();
+        int labelWidth = jLabel3.getPreferredSize().width;
+        int newX = (frameWidth - labelWidth) / 2;
+        jLabel3.setBounds(newX, jLabel3.getY(), labelWidth, jLabel3.getHeight());
+        
+        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableMode2 = new DefaultTableModel();
+        
+        tableModel.addColumn("Tip");
+        tableModel.addColumn("Plaka");
+        tableModel.addColumn("Marka");
+        tableModel.addColumn("Renk");
+        tableModel.addColumn("Konum");
+        tableModel.addColumn("Sarj Seviyesi");
+        tableModel.addColumn("Sarj Tuketimi");
+
+        tableMode2.addColumn("Tip");
+        tableMode2.addColumn("Plaka");
+        tableMode2.addColumn("Marka");
+        tableMode2.addColumn("Renk");
+        tableMode2.addColumn("Konum");
+        tableMode2.addColumn("Yakit Seviyesi");
+        tableMode2.addColumn("Yakit Tuketimi");
+
+        for (Vehicle vehicle : TrafficManagement.getInstance().araclarListesi) {
+            if (vehicle.getTip().equals("Elektrikli Otomobil")) {
+                tableModel.addRow(new Object[]{vehicle.getTip(), vehicle.getPlaka(), vehicle.getMarka(), vehicle.getRenk(), vehicle.getKonum(), vehicle.getYakitSevyesi(), vehicle.getEnerjiTuketimi()});
+            } else {
+                tableMode2.addRow(new Object[]{vehicle.getTip(), vehicle.getPlaka(), vehicle.getMarka(), vehicle.getRenk(), vehicle.getKonum(), vehicle.getYakitSevyesi(), vehicle.getEnerjiTuketimi()});
+            }
+        }
+        jTable1.setModel(tableModel);
+        jTable2.setModel(tableMode2);
+        
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        
+        jTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRow = jTable1.getSelectedRow(); // Seçilen satır
+                if (selectedRow != -1) {
+                    String plakaNO = (String) jTable1.getValueAt(selectedRow, 1);
+                    int sarjSeviyesi = (int) jTable1.getValueAt(selectedRow, 5); // Cast işlemi
+                    jLabel4.setText("Sarj Seviyesi = " + sarjSeviyesi );
+                    if (sarjSeviyesi < 30) {
+                        for(Vehicle vehicle : TrafficManagement.getInstance().araclarListesi) {
+                            if (vehicle.getPlaka().equals(plakaNO)) {
+                                vehicle.setYakitSevyesi(100);
+                                JOptionPane.showMessageDialog(null, "Sarj Dolduruldu");
+                                TrafikDurumuIzle trafikDurumuIzle = new TrafikDurumuIzle();
+                                trafikDurumuIzle.setLocationRelativeTo(null);
+                                trafikDurumuIzle.setVisible(true);
+                                setVisible(false);
+                            }
+                        }
+                    }
+                    
+                    
+//                    String id = jTable1.getValueAt(selectedRow, 0).toString();
+//                    String name = jTable1.getValueAt(selectedRow, 1).toString();
+//                    String surname = jTable1.getValueAt(selectedRow, 2).toString();
+//
+//                    // Örnek: Seçenek olarak JOptionPane göstermek
+//                    JOptionPane.showMessageDialog(null, "Seçilen Satır: \nID: " + id + "\nAd: " + name + "\nSoyad: " + surname, "Satır Bilgisi", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                table1(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Yakitli Otomobiller Listesi");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Elektrikli Otomobiller Listesi");
+
+        jButton1.setText("Geri");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hizmetDurumlariSayfasinaDonus(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setText("Araclar Durumu Izleme");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("-");
+        jLabel4.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jLable4Method(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 349, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(336, 336, 336))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(328, 328, 328))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(413, 413, 413))))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(348, 348, 348)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void table1(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_table1
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table1
+
+    private void hizmetDurumlariSayfasinaDonus(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hizmetDurumlariSayfasinaDonus
+        // TODO add your handling code here:
+        HizmetDurumlariniIzleme hizmetDurumlariniIzleme = new HizmetDurumlariniIzleme();
+        hizmetDurumlariniIzleme.setLocationRelativeTo(null);
+        hizmetDurumlariniIzleme.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_hizmetDurumlariSayfasinaDonus
+
+    private void jLable4Method(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLable4Method
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLable4Method
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TrafikDurumuIzle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TrafikDurumuIzle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TrafikDurumuIzle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TrafikDurumuIzle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TrafikDurumuIzle().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    // End of variables declaration//GEN-END:variables
+}

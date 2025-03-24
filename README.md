@@ -46,7 +46,7 @@ views/
 
 1. Clone the repository:
     ```sh
-    git clone <repository-url>
+    git clone https://github.com/HuzeyfeEM/smart-city-management
     ```
 2. Open the project in your IDE.
 3. Navigate to `AkilliSehirSistemi.java`.
